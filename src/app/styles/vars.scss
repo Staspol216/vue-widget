@@ -1,0 +1,13 @@
+$color-grey-h: 0deg;
+$color-grey-s: 0%;
+
+$color-primary-h: 99deg;
+$color-primary-s: 40%;
+
+:root {
+  --shadow: rgb(0 0 0 / 8%) 0 4px 6px -1px, rgb(0 0 0 / 4%) 0 2px 4px -1px;
+  --shadow-aside: rgb(0 0 0 / 2%) 0 -4px 6px -1px, rgb(0 0 0 / 1%) 0 -2px 4px -1px;
+  --color-white: hsl(0deg 0% 100%);
+  --color-black: hsl(0deg 0% 0%);
+}
+

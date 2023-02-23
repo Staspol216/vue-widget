@@ -1,6 +1,4 @@
-import { WeatherData } from "./types";
-
-export const weather = {
+export const city = {
     coord: {
       lon: -0.13,
       lat: 51.51
@@ -42,4 +40,4 @@ export const weather = {
     id: 2643743,
     name: "London",
     cod: 200
-  }
+}

@@ -1,0 +1,1 @@
+export const CITIES_LOCALSTORAGE_KEY = 'cities';

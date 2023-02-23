@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
+const Dotenv = require('dotenv-webpack');
 
 
 function buildLoaders({isDev}) {
@@ -52,6 +53,7 @@ function buildWebpackConfig(options) {
     };
 
     const plugins = [
+        new Dotenv(),
         new HtmlWebpackPlugin({
             template: paths.html,
         }),
@@ -94,7 +96,7 @@ function buildWebpackConfig(options) {
 
 module.exports = (env) => {
     const paths = {
-        entry: path.resolve(__dirname, 'src', 'index.ts'),
+        entry: path.resolve(__dirname, 'src', 'app', 'index.ts'),
         build: path.resolve(__dirname, 'build'),
         html: path.resolve(__dirname, 'public', 'index.html'),
         src: path.resolve(__dirname, 'src'),

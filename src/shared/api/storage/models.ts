@@ -1,10 +1,4 @@
-export interface CityNameParams {
-    q: string;
-    units: string;
-    appid: string;
-}
-
-export interface WeatherData {
+export type CityWheatherData = {
     coord: {
       lon: number;
       lat: number;
@@ -41,7 +35,7 @@ export interface WeatherData {
       sunrise: number;
       sunset: number;
     };
-    timezone: number;
+    timezone?: number;
     id: number;
     name: string;
     cod: number;
