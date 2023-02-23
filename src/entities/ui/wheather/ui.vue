@@ -1,18 +1,18 @@
 <template>
     <div :class="$style.cityCard">
         <div :class="$style.name">
-            {{ city.name }}, {{ city.sys.country }}
+            {{ weather.name }}, {{ weather.sys.country }}
         </div>
         <div :class="$style.mainInfo">
             <div :class="$style.icon">
-                <img :src="`http://openweathermap.org/img/wn/${city.weather[0].icon}@2x.png`" alt="wheather-icon">
+                <img :src="`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`" alt="wheather-icon">
             </div>
             <div :class="$style.temperature">
-                {{ Math.round(city.main.temp) }}&degC
+                {{ Math.round(weather.main.temp) }}&degC
             </div>
         </div>
-        <div :class="$style.wheatherInfo">
-            {{ wheatherInfo }}
+        <div :class="$style.weatherInfo">
+            {{ weatherInfo }}
         </div>
         <div :class="$style.details">
             <div>
@@ -37,32 +37,32 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import type { CityWheatherData } from "@/shared/api"
+import { CityWeatherData } from "@/shared/api"
 
 export default defineComponent({
-    name: 'CityCard',
+    name: 'WheatherCard',
     props: {
-        city: {
-            type: Object as PropType<CityWheatherData>,
+        weather: {
+            type: Object as PropType<CityWeatherData>,
             required: true,
         },
     },
     computed: {
-        wheatherInfo(): string {
-            return `Feels like ${Math.round(this.city.main.feels_like)}°C. 
-                    ${this.city.weather[0].main}. ${this.city.weather[0].description}.`
+        weatherInfo(): string {
+            return `Feels like ${Math.round(this.weather.main.feels_like)}°C. 
+                    ${this.weather.weather[0].main}. ${this.weather.weather[0].description}.`
         },
         windSpeed(): string {
-            return this.city.wind.speed + ' m/s'
+            return this.weather.wind.speed + ' m/s'
         },
         pressure(): string {
-            return this.city.main.pressure + ' hPa'
+            return this.weather.main.pressure + ' hPa'
         },
         visibility(): string {
-            return (this.city.visibility / 1000).toFixed(1) + ' km'
+            return (this.weather.visibility / 1000).toFixed(1) + ' km'
         },
         humidity(): string {
-            return this.city.main.humidity + ' %'
+            return this.weather.main.humidity + ' %'
         }
     }
 })
@@ -85,7 +85,7 @@ export default defineComponent({
     font-weight: 500;
 }
 
-.wheatherInfo {
+.weatherInfo {
     margin-bottom: 16px;
     font-size: 14px;
     line-height: 120%;

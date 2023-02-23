@@ -1,4 +1,15 @@
-export type CityWheatherData = {
+export interface Coords {
+  lat: number;
+  lon: number;
+}
+
+export interface City {
+  name: string;
+  coord: Coords;
+  id: number;
+}
+
+export interface CityWeatherData {
     coord: {
       lon: number;
       lat: number;

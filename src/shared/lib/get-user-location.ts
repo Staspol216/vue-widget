@@ -1,11 +1,13 @@
-export function getLocation() {
+import { Coords } from "@/shared/api";
+
+export function getLocation(): Promise<Coords> {
     return new Promise((resolve, reject) => {
       if (!navigator.geolocation) return 
         navigator.geolocation.getCurrentPosition(
           position => {
             resolve({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
+              lat: position.coords.latitude,
+              lon: position.coords.longitude,
             });
           },
           error => {
