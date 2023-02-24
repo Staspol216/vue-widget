@@ -5,9 +5,3 @@
             fill="#09121F" />
     </svg>
 </template>
-
-<script lang="ts">
-export default {
-
-}
-</script>

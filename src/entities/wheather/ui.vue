@@ -16,19 +16,19 @@
         </div>
         <div :class="$style.details">
             <div>
-                <span :class="$style.infoTitle">Wind speed</span>
+                <span>Wind speed</span>
                 {{ windSpeed }}
             </div>
             <div>
-                <span :class="$style.infoTitle">Pressure</span>
+                <span>Pressure</span>
                 {{ pressure }}
             </div>
             <div>
-                <span :class="$style.infoTitle">Visibility</span>
+                <span>Visibility</span>
                 {{ humidity }}
             </div>
             <div>
-                <span :class="$style.infoTitle">Humidity</span>
+                <span>Humidity</span>
                 {{ visibility }}
             </div>
         </div>
@@ -69,11 +69,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.infoTitle {
-    display: block;
-    font-weight: 500;
-}
-
 .cityCard {
     background: #e2f0ff;
     padding: 8px;
@@ -128,5 +123,10 @@ export default defineComponent({
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
+
+    span {
+        display: block;
+        font-weight: 500;
+    }
 }
 </style>
