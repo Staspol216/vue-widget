@@ -1,22 +1,20 @@
 <template>
     <div :class="$style.city">
-        <div :class="$style.burgerWrapper">
+        <div :class="[$style.burgerWrapper, dnd]">
             <span :class="$style.burger"></span>
         </div>
         <div :class="$style.cityName">
             {{ city.name }}
         </div>
-        <div :class="$style.binIcon">
-            <Bin />
-        </div>
+        <slot name="extra"></slot>
     </div>
 </template>
 
 <script setup lang="ts">
 import type { City } from '@/shared/api';
-import Bin from '@/shared/ui/icons/Bin.vue';
 defineProps<{
-    city: City
+    city: City,
+    dnd: string;
 }>()
 </script>
 
@@ -26,6 +24,8 @@ defineProps<{
     align-items: center;
     background: #e2edfa;
     padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 4px;
 }
 
 .cityName {
@@ -33,12 +33,6 @@ defineProps<{
     line-height: 120%;
     font-size: 14px;
     margin-right: 16px;
-}
-
-.binIcon {
-    display: flex;
-    margin-left: auto;
-    cursor: pointer;
 }
 
 .burgerWrapper {

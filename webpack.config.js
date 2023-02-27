@@ -62,7 +62,15 @@ function buildWebpackConfig(options) {
             filename: 'css/[name].[contenthash:8].css',
         }),
         new VueLoaderPlugin(),
-    ]
+    ];
+
+    const minify = {
+        minimize: true,
+        minimizer: [
+            '...',
+            new CssMinimizerPlugin(),
+        ],
+    }
 
     return {
         mode,
@@ -82,13 +90,7 @@ function buildWebpackConfig(options) {
                 '@': paths.src,
             },
         }, 
-        optimization: {
-            minimize: true,
-            minimizer: [
-                '...',
-                new CssMinimizerPlugin(),
-            ],
-        },
+        optimization: isDev ? undefined : minify,
         devtool: isDev ? 'inline-source-map' : undefined,
         devServer: isDev ? devServer : undefined,
     };
@@ -96,7 +98,7 @@ function buildWebpackConfig(options) {
 
 module.exports = (env) => {
     const paths = {
-        entry: path.resolve(__dirname, 'src', 'app', 'index.ts'),
+        entry: path.resolve(__dirname, 'src', 'main.ts'),
         build: path.resolve(__dirname, 'build'),
         html: path.resolve(__dirname, 'public', 'index.html'),
         src: path.resolve(__dirname, 'src'),

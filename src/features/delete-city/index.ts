@@ -1,0 +1,1 @@
+export { default as DeleteCity } from "./ui.vue"

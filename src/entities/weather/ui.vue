@@ -1,5 +1,5 @@
 <template>
-    <div :class="$style.cityCard">
+    <div :class="$style.weatherCard">
         <div :class="$style.name">
             {{ weather.name }}, {{ weather.sys.country }}
         </div>
@@ -12,67 +12,45 @@
             </div>
         </div>
         <div :class="$style.weatherInfo">
-            {{ weatherInfo }}
+            {{ `Feels like ${Math.round(props.weather.main.feels_like)}°C.
+                        ${weather.weather[0].main}. ${weather.weather[0].description}.` }}
         </div>
         <div :class="$style.details">
             <div>
                 <span>Wind speed</span>
-                {{ windSpeed }}
+                {{ weather.wind.speed + ' m/s' }}
             </div>
             <div>
                 <span>Pressure</span>
-                {{ pressure }}
+                {{ weather.main.pressure + ' hPa' }}
             </div>
             <div>
                 <span>Visibility</span>
-                {{ humidity }}
+                {{ weather.main.humidity + ' %' }}
             </div>
             <div>
                 <span>Humidity</span>
-                {{ visibility }}
+                {{ (weather.visibility / 1000).toFixed(1) + ' km' }}
             </div>
         </div>
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue';
+<script setup lang="ts">
 import { CityWeatherData } from "@/shared/api"
 
-export default defineComponent({
-    name: 'WheatherCard',
-    props: {
-        weather: {
-            type: Object as PropType<CityWeatherData>,
-            required: true,
-        },
-    },
-    computed: {
-        weatherInfo(): string {
-            return `Feels like ${Math.round(this.weather.main.feels_like)}°C. 
-                    ${this.weather.weather[0].main}. ${this.weather.weather[0].description}.`
-        },
-        windSpeed(): string {
-            return this.weather.wind.speed + ' m/s'
-        },
-        pressure(): string {
-            return this.weather.main.pressure + ' hPa'
-        },
-        visibility(): string {
-            return (this.weather.visibility / 1000).toFixed(1) + ' km'
-        },
-        humidity(): string {
-            return this.weather.main.humidity + ' %'
-        }
-    }
-})
+const props = defineProps<{
+    weather: CityWeatherData
+}>();
+
 </script>
 
 <style lang="scss" module>
-.cityCard {
+.weatherCard {
     background: #e2f0ff;
     padding: 8px;
     border-radius: 4px;
+    margin-bottom: 16px;
 }
 
 .name {

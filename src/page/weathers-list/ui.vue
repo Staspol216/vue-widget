@@ -3,38 +3,26 @@
         <div :class="$style.title">
             Weather
         </div>
-        <RouterLink to="/settings">
+        <RouterLink :class="$style.button" to="/settings">
             <Gear />
         </RouterLink>
     </div>
-    <div v-if="weatherStore.weathers.length" :class="$style.list">
+    <Loader v-if="weatherStore.isLoadingWeathers" />
+    <Empty v-else-if="weatherStore.isEmptyWeathersList">Weathers not found</Empty>
+    <div v-else :class="$style.list">
         <WeatherCard v-for="weather in weatherStore.weathers" :weather="weather" :key="weather.id" />
-    </div>
-    <div v-else :class="$style.loader">
-        <Loader />
-        <div :class="$style.loaderText">Loading...</div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
-import Gear from "@/shared/ui/icons/Gear.vue";
-import { WeatherCard, weatherModel } from "@/entities/wheather"
-import { onMounted } from "vue";
+import { WeatherCard, weatherModel } from "@/entities/weather"
 import { Loader } from "@/shared/ui/loader";
-import { cityModel } from "@/entities/city";
+import { Empty } from "@/shared/ui/empty";
+import Gear from "@/shared/ui/icons/Gear.vue";
+import { RouterLink } from "vue-router";
 
-
-const citiesStore = cityModel.use();
 const weatherStore = weatherModel.use();
-
-onMounted(async () => {
-    await citiesStore.getCitiesAync();
-    await weatherStore.getWeathersAsync();
-});
-
 </script>
-
 
 <style lang="scss" module>
 .header {
@@ -49,8 +37,6 @@ onMounted(async () => {
     font-size: 24px;
 }
 
-.list {}
-
 .menu {
     display: flex;
 }
@@ -63,7 +49,7 @@ onMounted(async () => {
     flex: 1 1 auto;
 }
 
-.loaderText {
-    margin-top: 24px;
+.button {
+    display: flex;
 }
 </style>
