@@ -20,7 +20,7 @@ const cityStore = cityModel.use();
 const handleClick = () => {
     cityStore.deleteCity(props.id).then(() => {
         weatherStore.deleteWeather(props.id)
-    }).catch(() => { })
+    })
 }
 </script>
 
