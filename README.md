@@ -3,8 +3,6 @@
 
 Weather-widget
 
-- [Architecture design guidelines](https://feature-sliced.design/)
-
 ## Technology stack
 
 - **UI**: `Vue 3 Composition API`
