@@ -8,7 +8,9 @@ import {VueLoaderPlugin} from 'vue-loader';
 import Dotenv from 'dotenv-webpack';
 
 type BuildMode = 'production' | 'development';
-type DefaultConfigurationValue  = "...";
+enum OptimizationOptions {
+    DefaultConfigurationValue = "..."
+};
 
 interface BuildPaths {
     entry: string;
@@ -108,7 +110,7 @@ function buildWebpackConfig(options: BuildOptions) {
             minimize: true,
             minimizer: [
                 new CssMinimizerPlugin(),
-                "..." as DefaultConfigurationValue,
+                OptimizationOptions.DefaultConfigurationValue,
             ],
         },
         devtool: isDev ? 'inline-source-map' : 'eval',
