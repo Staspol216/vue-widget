@@ -15,4 +15,9 @@
           },
         "skipLibCheck": true,
     },
+    "ts-node": {
+      "compilerOptions": {
+        "module": "CommonJS"
+      }
+    },
 }

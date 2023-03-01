@@ -1,5 +1,5 @@
 import { storageApi, weatherApi } from '@/shared/api';
-import { City, CityWeatherData, Coords } from '@/shared/api/models';
+import { City, CityWeatherData } from '@/shared/api/models';
 import { defineStore } from 'pinia';
 import { computed, onMounted, ref } from 'vue';
 

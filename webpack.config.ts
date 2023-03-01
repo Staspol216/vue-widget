@@ -1,13 +1,35 @@
-const path = require('path');
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const { VueLoaderPlugin } = require('vue-loader');
-const Dotenv = require('dotenv-webpack');
+import path from "path";
+import webpack from "webpack"
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import type { Configuration as DevServerConfiguration } from 'webpack-dev-server';
+import {VueLoaderPlugin} from 'vue-loader';
+import Dotenv from 'dotenv-webpack';
 
+type BuildMode = 'production' | 'development';
+type DefaultConfigurationValue  = "...";
 
-function buildLoaders({isDev}) {
+interface BuildPaths {
+    entry: string;
+    build: string;
+    html: string;
+    src: string;
+}
+
+interface BuildEnv {
+    mode: BuildMode;
+    port: number;
+}
+
+interface BuildOptions {
+    mode: BuildMode;
+    paths: BuildPaths;
+    isDev: boolean;
+    port: number;
+}
+
+function buildLoaders({isDev}: BuildOptions): webpack.RuleSetRule[] {
     const vueLoader = {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -41,18 +63,18 @@ function buildLoaders({isDev}) {
         cssLoaders,
         tsLoader
     ]
-};
+}
 
-function buildWebpackConfig(options) {
+function buildWebpackConfig(options: BuildOptions) {
     const { paths, mode, isDev } = options;
 
-    const devServer = {
+    const devServer: DevServerConfiguration = {
         static: './build',
         open: true,
         hot: true,
     };
 
-    const plugins = [
+    const plugins: webpack.WebpackPluginInstance[] = [
         new Dotenv(),
         new HtmlWebpackPlugin({
             template: paths.html,
@@ -63,14 +85,6 @@ function buildWebpackConfig(options) {
         }),
         new VueLoaderPlugin(),
     ];
-
-    const minify = {
-        minimize: true,
-        minimizer: [
-            '...',
-            new CssMinimizerPlugin(),
-        ],
-    }
 
     return {
         mode,
@@ -90,14 +104,20 @@ function buildWebpackConfig(options) {
                 '@': paths.src,
             },
         }, 
-        optimization: isDev ? undefined : minify,
-        devtool: isDev ? 'inline-source-map' : undefined,
+        optimization: isDev ? undefined : {
+            minimize: true,
+            minimizer: [
+                new CssMinimizerPlugin(),
+                "..." as DefaultConfigurationValue,
+            ],
+        },
+        devtool: isDev ? 'inline-source-map' : 'eval',
         devServer: isDev ? devServer : undefined,
     };
 }
 
-module.exports = (env) => {
-    const paths = {
+export default (env: BuildEnv) => {
+    const paths: BuildPaths = {
         entry: path.resolve(__dirname, 'src', 'main.ts'),
         build: path.resolve(__dirname, 'build'),
         html: path.resolve(__dirname, 'public', 'index.html'),
@@ -109,7 +129,7 @@ module.exports = (env) => {
     const isDev = mode === 'development';
 
 
-    const config = buildWebpackConfig({
+    const config: webpack.Configuration = buildWebpackConfig({
         mode,
         paths,
         isDev,
